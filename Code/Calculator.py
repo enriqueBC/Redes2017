@@ -34,6 +34,7 @@ class Calculator:
 	verificar el tipo de los operandos
 	"""
 	def procesar_linea(self):
+		self.verificacion = False
 		self.linea = self.linea.replace(" ", "")
 		operandos = []
 		for letra in self.linea:
@@ -46,6 +47,7 @@ class Calculator:
 
 		if len(operandos) != 2: # Revisando cardinalidad de operandos
 			self.resultado = "x_x ERROR en el numero de operandos"
+			self.verificacion = False
 		else: # Revisando el tipo de cada operando (que sean numeros)
 			try:
 				self.operando1 = float(operandos[0])
@@ -53,6 +55,7 @@ class Calculator:
 				self.verificacion = True
 			except ValueError:
 				self.resultado = "x_x ERROR en el tipo de los operandos"
+				self.verificacion = False
 	"""
 	Ejecuta la operacion solicitada con los operandos procesados
 	"""
@@ -74,4 +77,3 @@ class Calculator:
 		self.operando1 = 0
 		self.operando2 = 0
 		self.linea = ""
-		self.verificacion = False

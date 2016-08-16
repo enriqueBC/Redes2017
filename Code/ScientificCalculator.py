@@ -53,16 +53,30 @@ class ScientificCalculator(Calculator):
 	def ejecutar_operacion(self):
 		if self.codigo_operacion == ASCII_SUMA:
 			self.resultado = str(self.operando1+self.operando2)
+
 		if self.codigo_operacion == ASCII_RESTA:
 			self.resultado = str(self.operando1-self.operando2)
+
 		if self.codigo_operacion == ASCII_MODULO:
-			self.resultado = str(self.operando1%self.operando2)
+			if self.operando2 == 0:
+				self.resultado = "X_X ERROR Operacion no definida"
+				self.verificacion = False
+			else:
+				self.resultado = str(self.operando1%self.operando2)
+
 		if self.codigo_operacion == ASCII_MULTIPLICACION:
 			self.resultado = str(self.operando1*self.operando2)
+
 		if self.codigo_operacion == ASCII_DIVISION:
 			if self.operando2 != 0:
 				self.resultado = str(self.operando1/self.operando2)
 			else:
 				self.resultado = "X_X ERROR No puedo dividir entre 0 (aun)"
+				self.verificacion = False
+
 		if self.codigo_operacion == ASCII_POTENCIA:
-			self.resultado = str(self.operando1**self.operando2)
+			if self.operando1 == 0 and self.operando2 == 0:
+				self.resultado = "X_X ERROR Operacion no definida"
+				self.verificacion = False
+			else:
+				self.resultado = str(self.operando1**self.operando2)
