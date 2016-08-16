@@ -99,7 +99,9 @@ class MsgWindow(QtGui.QWidget):
         if self.redirect == PANTALLA_CALCULADORA:
             mainWindow = CalcWindow()
         self.close()
-
+"""
+Clase para representar la calculadora
+"""
 class CalcWindow(QtGui.QWidget):
     """
     Constructor
@@ -200,7 +202,9 @@ class CalcWindow(QtGui.QWidget):
     """
     def agregar_usuario(self):
         # Redireccionamiento a pantalla de usuario
-        print "Anadir usuario YAY"
+        mainWindow = UserWindow()
+        self.close()
+        
     """
     Recibe una entrada por medio de los botones de la interfaz
     """
@@ -214,3 +218,51 @@ class CalcWindow(QtGui.QWidget):
             self.calculadora.recibe_entrada(boton)
         self.line_label.setText(self.calculadora.linea)
         self.result_label.setText(self.calculadora.resultado)
+
+"""
+Clase para agregar a un nuevo usuario a la base de datos
+y redireccionar a otra pantalla
+"""
+class UserWindow(QtGui.QWidget):
+    """
+    Constructor
+    """
+    def __init__(self):
+        super(UserWindow, self).__init__()
+        self.initUI()
+    """
+    Inicializa y muestra los componentes de la interfaz grafica
+    En este caso, lo necesario para acceder a la calculadora por medio de usuarios
+    almacenados en la base de datos
+    """
+    def initUI(self):
+        # Definimos las etiquetas y los campos de entrada
+        user_label = QtGui.QLabel('Nombre de usuario:', self)
+        user_widget = QtGui.QLineEdit()
+        password_label = QtGui.QLabel('Contrasena:', self)
+        password_widget = QtGui.QLineEdit()
+        # Definimos el boton a llamar y su funcion
+        login_button = QtGui.QPushButton('Registrar')
+        login_button.clicked.connect(lambda: self.anadir_usuario(user_widget, password_widget))
+        # Definimos la cuadricula
+        grid = QtGui.QGridLayout()
+        grid.addWidget(user_label, 0, 0)
+        grid.addWidget(user_widget, 1, 0)
+        grid.addWidget(password_label, 2, 0)
+        grid.addWidget(password_widget, 3, 0)
+        grid.addWidget(login_button, 4, 1)
+        self.setLayout(grid)
+        self.setGeometry(DEFAULT_POSTION_X, DEFAULT_POSTION_Y, CALC_WIDTH, CALC_HEIGTH)
+        self.setWindowTitle('Registro de usuario')
+        self.show()
+    """
+    Realiza el acceso a la calculadora con los datos obtenidos en los campos de texto
+    """
+    def anadir_usuario(self, user_widget, pass_widget):
+        contact_user = str(user_widget.text())
+        contact_pass = str(pass_widget.text())
+        print "Registrando a: %s." % contact_user
+        login = Login(contact_user, contact_pass)
+        login.agregar_usuario(contact_user, contact_pass)
+        mainWindow = LoginWindow()
+        self.close()

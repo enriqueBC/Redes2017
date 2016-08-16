@@ -1,4 +1,4 @@
-from GUI.interfazGrafica import *
+from GUI.InterfazGrafica import *
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QWidget, QLabel
 """
